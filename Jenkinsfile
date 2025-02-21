@@ -12,6 +12,44 @@ pipeline {
             }
         }
 
+        stage('Prepare Workspaces') {
+            parallel {
+                stage('Prepare Dev') {
+                    steps {
+                        dir('dev') {
+                            sh '''
+                                cp -r ../modules .
+                                cp ../*.tf .
+                                cp ../environments/dev.tfvars .
+                            '''
+                        }
+                    }
+                }
+                stage('Prepare Staging') {
+                    steps {
+                        dir('staging') {
+                            sh '''
+                                cp -r ../modules .
+                                cp ../*.tf .
+                                cp ../environments/staging.tfvars .
+                            '''
+                        }
+                    }
+                }
+                stage('Prepare Prod') {
+                    steps {
+                        dir('prod') {
+                            sh '''
+                                cp -r ../modules .
+                                cp ../*.tf .
+                                cp ../environments/prod.tfvars .
+                            '''
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Terraform Init') {
             parallel {
                 stage('Init - Dev') {
@@ -127,7 +165,7 @@ def terraformInit(environment) {
 }
 
 def terraformPlan(environment) {
-    sh "terraform plan -var-file=environments/${environment}.tfvars -out=${environment}.tfplan -no-color"
+    sh "terraform plan -var-file=${environment}.tfvars -out=${environment}.tfplan -no-color"
 }
 
 def terraformApply(environment) {
