@@ -16,22 +16,28 @@ pipeline {
             parallel {
                 stage('Init - Dev') {
                     steps {
-                        script {
-                            terraformInit('dev')
+                        dir('dev') {
+                            script {
+                                terraformInit('dev')
+                            }
                         }
                     }
                 }
                 stage('Init - Staging') {
                     steps {
-                        script {
-                            terraformInit('staging')
+                        dir('staging') {
+                            script {
+                                terraformInit('staging')
+                            }
                         }
                     }
                 }
                 stage('Init - Prod') {
                     steps {
-                        script {
-                            terraformInit('prod')
+                        dir('prod') {
+                            script {
+                                terraformInit('prod')
+                            }
                         }
                     }
                 }
@@ -42,22 +48,28 @@ pipeline {
             parallel {
                 stage('Plan - Dev') {
                     steps {
-                        script {
-                            terraformPlan('dev')
+                        dir('dev') {
+                            script {
+                                terraformPlan('dev')
+                            }
                         }
                     }
                 }
                 stage('Plan - Staging') {
                     steps {
-                        script {
-                            terraformPlan('staging')
+                        dir('staging') {
+                            script {
+                                terraformPlan('staging')
+                            }
                         }
                     }
                 }
                 stage('Plan - Prod') {
                     steps {
-                        script {
-                            terraformPlan('prod')
+                        dir('prod') {
+                            script {
+                                terraformPlan('prod')
+                            }
                         }
                     }
                 }
@@ -68,22 +80,28 @@ pipeline {
             parallel {
                 stage('Apply - Dev') {
                     steps {
-                        script {
-                            terraformApply('dev')
+                        dir('dev') {
+                            script {
+                                terraformApply('dev')
+                            }
                         }
                     }
                 }
                 stage('Apply - Staging') {
                     steps {
-                        script {
-                            terraformApply('staging')
+                        dir('staging') {
+                            script {
+                                terraformApply('staging')
+                            }
                         }
                     }
                 }
                 stage('Apply - Prod') {
                     steps {
-                        script {
-                            terraformApply('prod')
+                        dir('prod') {
+                            script {
+                                terraformApply('prod')
+                            }
                         }
                     }
                 }
